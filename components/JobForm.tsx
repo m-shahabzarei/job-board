@@ -54,16 +54,11 @@
 //   );
 // }
 
-
-
-
-
 "use client";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { jobSchema } from "@/lib/validators/job";
-import { createJob } from "@/server-actions/createJob";
 import { toast } from "react-hot-toast";
 
 export default function JobForm() {
@@ -73,15 +68,24 @@ export default function JobForm() {
   });
 
   const onSubmit = async (data: any) => {
-    const res = await createJob(data);
+    try {
+      const res = await fetch("/api/jobs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await res.json();
 
-    if (res.error) {
-      toast.error(res.error);
-      return;
+      if (!res.ok) {
+        toast.error(result.error?.formErrors?.fieldErrors?.title?.[0] || "Error creating job");
+        return;
+      }
+
+      toast.success("Job created");
+      reset();
+    } catch (err) {
+      toast.error("Error creating job");
     }
-
-    toast.success("Job created");
-    reset();
   };
 
   return (
@@ -106,7 +110,6 @@ export default function JobForm() {
         </select>
 
         <input {...register("location")} placeholder="City" className="border p-2 rounded" />
-
         <input {...register("salary")} placeholder="Salary" className="border p-2 rounded" />
       </div>
 

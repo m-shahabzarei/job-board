@@ -6,7 +6,7 @@ import { useSession, signIn, signOut,register } from "next-auth/react";
 export default function Nav() {
   const { data: session } = useSession();
   return (
-    <nav className="bg-white shadow p-4">
+    <nav className="bg-[#222222] shadow p-4">
       <div className="container mx-auto flex justify-between">
         <Link href="/">JobBoard</Link>
         <div className="space-x-4">
@@ -19,7 +19,6 @@ export default function Nav() {
           ) : (
             <>
             <button onClick={() => signIn()}>Sign in</button>
-            <button onClick={() => register()}>register</button>
             </>
           )}
         </div>

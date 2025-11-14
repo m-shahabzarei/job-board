@@ -8,7 +8,7 @@ import Provider from "@/lib/providers/Provider";
 export default function RootLayout({ children }: { children: React.ReactNode }){
   return (
     <html lang="fa">
-      <body>
+      <body className="bg-[#191919] text-white">
         <Provider>
           <Navbar/>
         <main className="container mx-auto py-8">{children}</main>
