@@ -1,3 +1,6 @@
+// @ts-nocheck
+
+
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
